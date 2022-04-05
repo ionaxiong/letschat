@@ -15,7 +15,15 @@ export function BottomTabNavigator() {
     <MainTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: Colors[colorScheme].background,
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme].tint,
+        },
+        tabBarIndicatorStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          height: 3,
+        },
+
       }}
     >
       <MainTab.Screen
@@ -23,12 +31,12 @@ export function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Modal")}
               style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
+                opacity: pressed ? 0 : 0.5,
               })}
             >
               <FontAwesome
@@ -44,7 +52,7 @@ export function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }} />
     </MainTab.Navigator>
   );

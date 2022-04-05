@@ -9,7 +9,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   NavigationContainer,
   DefaultTheme,
@@ -21,10 +21,7 @@ import { ColorSchemeName, View } from "react-native";
 import Colors from "../constants/Colors";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import {
-  RootStackParamList,
-  RootTabParamList,
-} from "../types";
+import { RootStackParamList, RootTabParamList } from "../types";
 import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -56,6 +53,7 @@ function RootNavigator() {
         headerStyle: {
           backgroundColor: Colors.light.tint,
         },
+        headerShadowVisible: false,
         headerTintColor: Colors.light.background,
         headerTitleAlign: "left",
         headerTitleStyle: {
@@ -69,7 +67,13 @@ function RootNavigator() {
         options={{
           title: "LetsChat",
           headerRight: () => (
-            <View style={{flexDirection: 'row', width: 50, justifyContent: 'space-between' }} >
+            <View
+              style={{
+                flexDirection: "row",
+                width: 50,
+                justifyContent: "space-between",
+              }}
+            >
               <Octicons
                 name="search"
                 size={20}
