@@ -20,7 +20,7 @@ const ChatListItem = (props: ChatListItemProps) => {
           <Text style={style.lastMessage} >{chatRoom.lastMessage.content}</Text>
         </View>
       </View>
-      <Text numberOfLines={2} style={style.time}>{moment(chatRoom.lastMessage.createdAt).format("dddd")}</Text>
+      <Text numberOfLines={2} style={style.time}>{moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}</Text>
     </View>
   );
 };

@@ -5,6 +5,7 @@ const style = StyleSheet.create({
         width: 60,
         height: 60,
         marginRight: 10,
+        marginLeft: 5,
         borderRadius: 400/2,
     },
     container: {
@@ -12,15 +13,12 @@ const style = StyleSheet.create({
         width: "100%",
         justifyContent: "space-between",
         padding: 10,
-
     },
     leftContainer: {
         flexDirection: "row",
-
     },
     midContainer: {
         justifyContent: "space-around",
-
     },
     username: {
         fontSize: 15,
@@ -31,8 +29,9 @@ const style = StyleSheet.create({
         color: "grey",
     },
     time: {
-        fontSize: 15,
+        fontSize: 12,
         color: "grey",
+        padding: 5,
     }
 })
 
