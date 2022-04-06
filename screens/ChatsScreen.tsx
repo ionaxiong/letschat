@@ -1,9 +1,14 @@
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
+import ChatListItem from '../components/ChatListItem';
+
+
 
 export default function ChatsScreen() {
   return (
-    <View style={styles.container}>
+    <View style={styles.container}> 
+      <ChatListItem chatRoom={{lastMessage: {content: "Hello!"}}} />
     </View>
   );
 }
