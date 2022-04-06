@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Timestamp } from 'react-native-reanimated/lib/types/lib/reanimated2/commonTypes';
 
 declare global {
   namespace ReactNavigation {
@@ -35,3 +36,21 @@ export type RootTabScreenProps<Screen extends keyof MainTabParamList> = Composit
   BottomTabScreenProps<MainTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type User = {
+  id: String;
+  name: String;
+  imageUri: String;
+}
+
+export type Message = {
+  id: String;
+  content: String;
+  createAt: Number;
+}
+
+export type ChatRoom = {
+  id: String;
+  users: [User];
+  lastMessage: Message;
+}

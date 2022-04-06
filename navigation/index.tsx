@@ -20,7 +20,7 @@ import { ColorSchemeName, View } from "react-native";
 import Colors from "../constants/Colors";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList, RootTabParamList } from "../types";
+import { RootStackParamList, MainTabParamList } from "../types";
 import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -103,7 +103,7 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-export const MainTab = createMaterialTopTabNavigator<RootTabParamList>();
+export const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
