@@ -45,7 +45,7 @@ export type User = {
 export type Message = {
   id: String;
   content: String;
-  createAt: Number;
+  createdAt: String;
 }
 
 export type ChatRoom = {

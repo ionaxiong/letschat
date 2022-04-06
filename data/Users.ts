@@ -22,7 +22,7 @@ export default [{
   }, {
     id: 'u6',
     name: 'Elon Musk',
-    imageUri: 'https://assets3.thrillist.com/v1/image/2535663/size/tmg-facebook_social.jpg',
+    imageUri: 'https://cdn.acidcow.com/pics/20110429/other/6/amazing_animal_pictures_09.jpg',
   }, {
     id: 'u7',
     name: 'Adrian',

@@ -1,22 +1,28 @@
-import { View, Text, Image} from "react-native";
+import { View, Text, Image } from "react-native";
 import { ChatRoom } from "../../types";
-import style from './style';
+import style from "./style";
 
 export type ChatListItemProps = {
-    chatRoom: ChatRoom;
-  }
+  chatRoom: ChatRoom;
+};
 
 const ChatListItem = (props: ChatListItemProps) => {
-    const {chatRoom} = props;
+  const { chatRoom } = props;
+  const user = chatRoom.users[1];
 
-    const user = chatRoom.users[0];
-    console.log(user.imageUri)
-    return (
-        <View>
-            <Image source={{ uri: user.imageUri}} style={style.image} ></Image>
-            <Text >{chatRoom.lastMessage.content}</Text>
+  return (
+    <View style={style.container}>
+      <View style={style.leftContainer}>
+        <Image source={{ uri: user.imageUri }} style={style.avatar}></Image>
+        <View style={style.midContainer}>
+          <Text style={style.username} >{user.name}</Text>
+          <Text style={style.lastMessage} >{chatRoom.lastMessage.content}</Text>
         </View>
-    )
-}
+      </View>
+      {/* <Text >{chatRoom.lastMessage.createdAt}</Text> */}
+      <Text style={style.time} >Yesterday</Text>
+    </View>
+  );
+};
 
 export default ChatListItem;

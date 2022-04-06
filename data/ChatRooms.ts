@@ -71,7 +71,7 @@ export default [{
     }, {
       id: 'u6',
       name: 'Elon Musk',
-      imageUri: 'https://scontent.fkiv3-1.fna.fbcdn.net/v/t1.0-9/117929133_107809907710190_7419805747453745280_n.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_eui2=AeHyr9m8dMUXCyqgYiDxTTMqypeilYrkr1_Kl6KViuSvX2aKglh0TaInpI6Uqbk8nRSKq6iOQuTncbpb6Uik2iH8&_nc_ohc=YusbV4P7yQMAX9ptPAN&_nc_ht=scontent.fkiv3-1.fna&oh=ebee2db09b2a70c9dbef1bdad876c09c&oe=5F9D4112',
+      imageUri: 'https://cdn.acidcow.com/pics/20110429/other/6/amazing_animal_pictures_09.jpg',
     }],
     lastMessage: {
       id: 'm5',
