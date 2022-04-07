@@ -7,6 +7,8 @@ import {
   FontAwesome,
   Octicons,
   MaterialCommunityIcons,
+  MaterialIcons,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
@@ -91,8 +93,15 @@ function RootNavigator() {
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={({ route }) => ({ title: route.params.id })}
-        // options={{title: "ChatRoom"}}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerRight: () => 
+          <View style={{flexDirection: "row", width: 100, justifyContent: "space-between"}} >
+            <FontAwesome5 name="video" size={20} color={Colors.light.background} />
+            <MaterialIcons name="call" size={20} color={Colors.light.background} />
+            <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.light.background} />
+          </View>,
+        })}
       />
       <Stack.Screen
         name="NotFound"
