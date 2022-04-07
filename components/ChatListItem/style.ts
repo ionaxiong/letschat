@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 const style = StyleSheet.create({
     avatar: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         marginRight: 10,
         marginLeft: 5,
         borderRadius: 400/2,
