@@ -23,6 +23,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
 import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import ChatRoomScreen from '../screens/ChatRoomScreen';
 
 export default function Navigation({
   colorScheme,
@@ -86,6 +87,11 @@ function RootNavigator() {
             </View>
           ),
         }}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={{ title: "ChatRoom" }}
       />
       <Stack.Screen
         name="NotFound"
