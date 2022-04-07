@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     avatar: {
         width: 50,
         height: 50,
@@ -35,4 +35,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default style;
+export default styles;
