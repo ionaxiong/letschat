@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { useState } from "react";
 import {
@@ -7,16 +7,34 @@ import {
   FontAwesome5,
   Entypo,
   Fontisto,
+  MaterialIcons,
 } from "@expo/vector-icons";
 
 const InputBox = () => {
   const [message, setMessage] = useState("");
+
+  const onMicrophonePress = () => {
+    console.warn("Microphone");
+  };
+
+  const onSendPress = () => {
+    console.warn("Send");
+  };
+
+  const onPress = () => {
+    if (!message) {
+      onMicrophonePress();
+    } else {
+      onSendPress();
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
         <FontAwesome5 name="laugh-beam" size={24} color="grey"></FontAwesome5>
         <TextInput
+          placeholder="Message"
           style={styles.textInput}
           multiline
           value={message}
@@ -28,20 +46,28 @@ const InputBox = () => {
           color="grey"
           style={styles.icon}
         ></Entypo>
-        <Fontisto
-          name="camera"
-          size={24}
-          color="grey"
-          style={styles.icon}
-        ></Fontisto>
+        {!message && (
+          <Fontisto
+            name="camera"
+            size={24}
+            color="grey"
+            style={styles.icon}
+          ></Fontisto>
+        )}
       </View>
-      <View style={styles.buttonContainer}>
-        <MaterialCommunityIcons
-          name="microphone"
-          size={24}
-          color="white"
-        ></MaterialCommunityIcons>
-      </View>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.buttonContainer}>
+          {!message ? (
+            <MaterialCommunityIcons
+              name="microphone"
+              size={24}
+              color="white"
+            ></MaterialCommunityIcons>
+          ) : (
+            <MaterialIcons name="send" size={24} color="white"></MaterialIcons>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
