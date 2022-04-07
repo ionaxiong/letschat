@@ -20,12 +20,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, View } from "react-native";
 import Colors from "../constants/Colors";
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
 import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
+import ContactsScreen from "../screens/ContactsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -120,8 +120,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="Contacts"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        component={ContactsScreen}
       />
       <Stack.Screen
         name="NotFound"

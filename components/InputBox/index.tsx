@@ -14,11 +14,13 @@ const InputBox = () => {
   const [message, setMessage] = useState("");
 
   const onMicrophonePress = () => {
-    console.warn("Microphone");
+    console.warn("Recording");
   };
 
   const onSendPress = () => {
-    console.warn("Send");
+    console.warn(`Sending: ${message}`);
+    // send the message to the backend
+    setMessage(message)
   };
 
   const onPress = () => {
