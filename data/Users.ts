@@ -7,6 +7,7 @@ export default [{
     id: 'u2',
     name: 'Lukas',
     imageUri: 'https://www.animalaid.org.uk/wp-content/uploads/2016/09/Pigeon-istock-e1554387845110.jpg',
+    status: "Happy day!"
   }, {
     id: 'u3',
     name: 'Daniil',
@@ -39,4 +40,5 @@ export default [{
     id: 'u10',
     name: 'Angelina Jolie',
     imageUri: 'https://yt3.ggpht.com/a/AATXAJxUWk9R5tzGZsldab1e9Wi_Tl4LOJ9dQVxayQ=s900-c-k-c0xffffffff-no-rj-mo',
+    status: "Icecream"
   }]
