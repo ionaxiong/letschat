@@ -12,22 +12,27 @@ export default [{
     id: 'u3',
     name: 'Daniil',
     imageUri: 'http://www.animals-zone.com/wp-content/uploads/2016/02/soul-6.jpg',
+    status: "Summer is coming..."
   }, {
     id: 'u4',
     name: 'Alex',
     imageUri: 'https://a-z-animals.com/media/pig-7-1024x535.jpg',
+    status: "Jees"
   }, {
     id: 'u5',
     name: 'Vlad',
     imageUri: 'https://www.prestigeholidays.co.uk/holiday-inspirations/wp-content/uploads/2017/06/Tenerife-for-Little-Animal-Lovers-Post1.jpg',
+    status:"nothing to say"
   }, {
     id: 'u6',
     name: 'Elon Musk',
     imageUri: 'https://cdn.acidcow.com/pics/20110429/other/6/amazing_animal_pictures_09.jpg',
+    status: "..."
   }, {
     id: 'u7',
     name: 'Adrian',
     imageUri: 'https://www.zsl.org/sites/default/files/image/2014-02/WR-CHIMP-2.jpg',
+    status: "Ramen"
   }, {
     id: 'u8',
     name: 'Borja',
