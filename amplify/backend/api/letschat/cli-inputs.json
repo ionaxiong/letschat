@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "letschat",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/mnt/c/Users/iona/projects/Mobile Programming/letschat/amplify/backend/api/letschat/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authletschat4b31d73a"
+    }
+  }
+}

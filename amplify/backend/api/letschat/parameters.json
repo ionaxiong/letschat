@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "letschat",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authletschat4b31d73a",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
