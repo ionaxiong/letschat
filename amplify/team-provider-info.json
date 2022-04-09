@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-letschat-dev-194713-authRole",
+      "UnauthRoleArn": "arn:aws:iam::750187018429:role/amplify-letschat-dev-194713-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::750187018429:role/amplify-letschat-dev-194713-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-letschat-dev-194713-deployment",
+      "UnauthRoleName": "amplify-letschat-dev-194713-unauthRole",
+      "StackName": "amplify-letschat-dev-194713",
+      "StackId": "arn:aws:cloudformation:eu-central-1:750187018429:stack/amplify-letschat-dev-194713/b67c84f0-b824-11ec-8cb0-0a46e0a9867c",
+      "AmplifyAppId": "d2vak8pwgxzgw"
+    }
+  }
+}
