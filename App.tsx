@@ -43,22 +43,13 @@ function App() {
       const userInfo = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
-      console.log(userInfo);
 
       if (userInfo) {
-        const userData = await API.graphql(
+        const usersData = await API.graphql(
           graphqlOperation(getUser, { id: userInfo.attributes.sub })
         );
-        console.log(userInfo.attributes.sub);
-        console.log(
-          "*************************************************************"
-        );
-        console.log(userData);
-        console.log(
-          "*************************************************************"
-        );
         // get the user from backend with user id from auth
-        if (userData.data.getUser) {
+        if (usersData.data.getUser) {
           console.log("user is already registered in db");
           return;
         }
