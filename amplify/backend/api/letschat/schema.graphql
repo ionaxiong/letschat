@@ -25,9 +25,9 @@ type ChatRoomUser
   @auth(rules: [{ allow: owner}]){
     id: ID!
     userID: ID! @index(name:"byUser")
-    ChatRoomID: ID! @index(name:"byChatRoom")
+    chatRoomID: ID! @index(name:"byChatRoom")
     user: User @hasOne(fields:["userID"])
-    chatRoom: ChatRoom @hasOne(fields:["ChatRoomID"])
+    chatRoom: ChatRoom @hasOne(fields:["chatRoomID"])
 }
 
 type ChatRoom 
