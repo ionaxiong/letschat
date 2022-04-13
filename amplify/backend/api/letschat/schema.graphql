@@ -1,15 +1,47 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 
-input AMPLIFY {
-  globalAuthRule: AuthRule = { allow: public }
-} 
-
+# change from AuthRule = { allow: public }
+# input AMPLIFY {
+#   globalAuthRule: AuthRule = { allow: owner }
+# } 
 # FOR TESTING ONLY!
 
-type User @model @aws_cognito_user_pools @auth(rules: [{ allow: owner}]){
-  id: ID!
-  name: String!
-  imageUri: String
-  status: String
+type User 
+  @model 
+  @aws_cognito_user_pools 
+  @auth(rules: [{ allow: owner}]){
+    id: ID!
+    name: String!
+    imageUri: String
+    status: String
+    # chatRooms: [ChatRoom] @manyToMany(relationName: "ChatRoomUser")
+    chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields:["id"])
+ }
+
+type ChatRoomUser 
+  @model 
+  @aws_cognito_user_pools 
+  @auth(rules: [{ allow: owner}]){
+    id: ID!
+    userID: ID! @index(name:"byUser")
+    ChatRoomID: ID! @index(name:"byChatRoom")
+    user: User @hasOne(fields:["userID"])
+    chatRoom: ChatRoom @hasOne(fields:["ChatRoomID"])
 }
+
+type ChatRoom 
+  @model 
+  @aws_cognito_user_pools 
+  @auth(rules: [{ allow: owner}]){
+    id: ID!
+    # users: [User] @manyToMany(relationName: "ChatRoomUser")
+    chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields:["id"])
+  
+    # list of messages
+}
+  
+
+# adapt new graphql version to migrate schema
+# @connection is replaced
+# @key is replaced
