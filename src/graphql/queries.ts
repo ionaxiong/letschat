@@ -13,7 +13,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -54,7 +54,7 @@ export const getChatRoomUser = /* GraphQL */ `
     getChatRoomUser(id: $id) {
       id
       userID
-      ChatRoomID
+      chatRoomID
       user {
         id
         name
@@ -92,7 +92,7 @@ export const listChatRoomUsers = /* GraphQL */ `
       items {
         id
         userID
-        ChatRoomID
+        chatRoomID
         user {
           id
           name
@@ -124,7 +124,7 @@ export const getChatRoom = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner

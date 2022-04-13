@@ -13,7 +13,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -37,7 +37,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -61,7 +61,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -79,7 +79,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
     onCreateChatRoomUser(owner: $owner) {
       id
       userID
-      ChatRoomID
+      chatRoomID
       user {
         id
         name
@@ -112,7 +112,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
     onUpdateChatRoomUser(owner: $owner) {
       id
       userID
-      ChatRoomID
+      chatRoomID
       user {
         id
         name
@@ -145,7 +145,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
     onDeleteChatRoomUser(owner: $owner) {
       id
       userID
-      ChatRoomID
+      chatRoomID
       user {
         id
         name
@@ -181,7 +181,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -202,7 +202,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
@@ -223,7 +223,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         items {
           id
           userID
-          ChatRoomID
+          chatRoomID
           createdAt
           updatedAt
           owner
