@@ -19,7 +19,7 @@ const ContactListItem = (props: ContactListItemProps) => {
 
   const onClick = async () => {
     try {
-      //create a new chatroom
+      // 1. create a new chatroom
       const newChatRoomData = await API.graphql(
         graphqlOperation(createChatRoom, { input: {} })
       );
@@ -29,25 +29,31 @@ const ContactListItem = (props: ContactListItemProps) => {
       }
       const newChatRoom = newChatRoomData.data.createChatRoom;
 
-      //add the user to the chatroom
+      // 2. add the user to the chatroom
       await API.graphql(
         graphqlOperation(createChatRoomUser, {
-          input: { 
-            userID: user.id, 
-            ChatRoomID: newChatRoom.id 
+          input: {
+            userID: user.id,
+            chatRoomID: newChatRoom.id,
           },
         })
       );
-      //add the authenticated user to the chatroom
+      // 3. add the authenticated user to the chatroom
       const userInfo = await Auth.currentAuthenticatedUser();
       await API.graphql(
         graphqlOperation(createChatRoomUser, {
           input: {
             userID: userInfo.attributes.sub,
-            ChatRoomID: newChatRoom.id,
+            chatRoomID: newChatRoom.id,
           },
         })
       );
+
+      navigation.navigate("ChatRoom", {
+        id: newChatRoom.id,
+        name: user.name,
+      });
+      
     } catch (e) {
       console.log("something went wrong", e);
       // console.log("something went wrong", e.errors[0]["message"]);
