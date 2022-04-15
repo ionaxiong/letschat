@@ -19,9 +19,23 @@ export default function ChatsScreen() {
             id: userInfo.attributes.sub,
           })
         );
-        // console.log("*********", userData)
-        console.log("!!!!!", userData.data.getUser.chatRoomUser.items.length, userData.data.getUser.chatRoomUser.items)
-        setChatRooms(userData.data.getUser.chatRoomUser.items);
+
+        const chatRoomsData = userData.data.getUser.chatRoomUser.items;
+        const removeDuplications = (duplicates) => {
+          const flag = {};
+          const unique = [];
+          duplicates.forEach((item) => {
+            if (!flag[item.chatRoomID]) {
+              flag[item.chatRoomID] = true;
+              unique.push(item);
+            }
+          });
+          return unique;
+        };
+
+        const uniqueChatRoomList = removeDuplications(chatRoomsData);
+        setChatRooms(uniqueChatRoomList);
+        console.log(uniqueChatRoomList.length);
       } catch (e) {
         console.log(e);
       }
