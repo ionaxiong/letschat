@@ -5,7 +5,7 @@ import { View } from "../components/Themed";
 import ChatRooms from "../data/ChatRooms";
 import { useEffect } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import { getUser } from "../src/graphql/queries";
+import { getUser } from "./queries";
 
 export default function ChatsScreen() {
   useEffect(() => {
@@ -18,6 +18,7 @@ export default function ChatsScreen() {
             id: userInfo.attributes.sub,
           })
         );
+        console.log("chat screen user data!!", userData)
       } catch (e) {
         console.log(e);
       }
