@@ -67,7 +67,6 @@ const ContactListItem = (props: ContactListItemProps) => {
         userInfo.attributes.sub,
         user.id
       );
-      console.log("this is the result!!!!!!!!!!!!!!!!!!!!!", result);
       if (result) {
         navigation.navigate("ChatRoom", {
           id: result,

@@ -2,12 +2,13 @@ import { FlatList, StyleSheet } from "react-native";
 import ChatListItem from "../components/ChatListItem";
 import NewMessageButton from "../components/NewMessageButton";
 import { View } from "../components/Themed";
-import ChatRooms from "../data/ChatRooms";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getUser } from "./queries";
 
 export default function ChatsScreen() {
+  const [chatRooms, setChatRooms] = useState([]);
+
   useEffect(() => {
     const fetchChatRooms = async () => {
       try {
@@ -18,7 +19,9 @@ export default function ChatsScreen() {
             id: userInfo.attributes.sub,
           })
         );
-        console.log("chat screen user data!!", userData)
+        // console.log("*********", userData)
+        console.log("!!!!!", userData.data.getUser.chatRoomUser.items.length, userData.data.getUser.chatRoomUser.items)
+        setChatRooms(userData.data.getUser.chatRoomUser.items);
       } catch (e) {
         console.log(e);
       }
@@ -31,8 +34,8 @@ export default function ChatsScreen() {
       <FlatList
         style={styles.flatList}
         keyExtractor={(item) => item.id}
-        data={ChatRooms}
-        renderItem={({ item }) => <ChatListItem chatRoom={item} />}
+        data={chatRooms}
+        renderItem={({ item }) => <ChatListItem chatRoom={item.chatRoom} />}
       ></FlatList>
       <NewMessageButton />
     </View>
