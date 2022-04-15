@@ -15,7 +15,6 @@ type User
     name: String!
     imageUri: String
     status: String
-    # chatRooms: [ChatRoom] @manyToMany(relationName: "ChatRoomUser")
     chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields:["id"])
  }
 
@@ -35,11 +34,15 @@ type ChatRoom
   @aws_cognito_user_pools 
   @auth(rules: [{ allow: owner}]){
     id: ID!
-    # users: [User] @manyToMany(relationName: "ChatRoomUser")
     chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields:["id"])
-  
-    # list of messages
 }
+
+# type Message
+#   @model
+#   @aws_cognito_user_pools
+#   @auth(rule: [{allow: owner}]) {
+
+#   }
   
 
 # adapt new graphql version to migrate schema
