@@ -3,13 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import {
-  FontAwesome,
-  Octicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   NavigationContainer,
@@ -22,7 +16,6 @@ import { ColorSchemeName, View } from "react-native";
 import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
-import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ContactsScreen from "../screens/ContactsScreen";
@@ -62,7 +55,6 @@ function RootNavigator() {
     >
       <Stack.Screen
         name="Root"
-        // component={MainTabNavigator.BottomTabNavigator}
         component={ChatsScreen}
         options={{
           title: "LetsChat",
@@ -79,11 +71,6 @@ function RootNavigator() {
                 size={20}
                 color={Colors.light.background}
               />
-              {/* <MaterialCommunityIcons
-                name="dots-vertical"
-                size={20}
-                color={Colors.light.background}
-              /> */}
             </View>
           ),
         }}
@@ -100,23 +87,7 @@ function RootNavigator() {
                 width: 100,
                 justifyContent: "space-between",
               }}
-            >
-              {/* <FontAwesome5
-                name="video"
-                size={20}
-                color={Colors.light.background}
-              />
-              <MaterialIcons
-                name="call"
-                size={20}
-                color={Colors.light.background}
-              />
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={20}
-                color={Colors.light.background}
-              /> */}
-            </View>
+            ></View>
           ),
         })}
       />

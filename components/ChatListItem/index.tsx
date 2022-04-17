@@ -12,7 +12,7 @@ export type ChatListItemProps = {
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
-  const [otherUser, setOtherUser] = useState("");
+  const [otherUser, setOtherUser] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const ChatListItem = (props: ChatListItemProps) => {
     };
     getOtherUser();
   }, []);
-  // console.log("user from chatlist item index", user)
 
   const onClick = () => {
     navigation.navigate("ChatRoom", {
@@ -35,15 +34,22 @@ const ChatListItem = (props: ChatListItemProps) => {
     });
   };
 
+  if (!otherUser) {
+    return null;
+  }
+
   return (
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.container}>
         <View style={styles.leftContainer}>
-          <Image source={{ uri: otherUser.imageUri }} style={styles.avatar}></Image>
+          <Image
+            source={{ uri: otherUser.imageUri }}
+            style={styles.avatar}
+          ></Image>
           <View style={styles.midContainer}>
             <Text style={styles.username}>{otherUser.name}</Text>
             <Text style={styles.lastMessage}>
-              {chatRoom.lastMessage ? chatRoom.lastMessage.content : "hi"}
+              {chatRoom.lastMessage && chatRoom.lastMessage.content}
             </Text>
           </View>
         </View>
