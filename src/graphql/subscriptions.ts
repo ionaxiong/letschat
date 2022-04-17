@@ -97,6 +97,19 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         chatRoomUsers {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
         createdAt
         updatedAt
         owner
@@ -129,6 +142,19 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         id
         chatRoomUsers {
           nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
         }
         createdAt
         updatedAt
@@ -163,6 +189,19 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         chatRoomUsers {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
         createdAt
         updatedAt
         owner
@@ -188,6 +227,44 @@ export const onCreateChatRoom = /* GraphQL */ `
         }
         nextToken
       }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+          owner
+        }
+        chatRoomID
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+          owner
+        }
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -208,6 +285,44 @@ export const onUpdateChatRoom = /* GraphQL */ `
           owner
         }
         nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+          owner
+        }
+        chatRoomID
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+          owner
+        }
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
@@ -230,7 +345,186 @@ export const onDeleteChatRoom = /* GraphQL */ `
         }
         nextToken
       }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        userID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+          owner
+        }
+        chatRoomID
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+          owner
+        }
+        updatedAt
+        owner
+      }
       createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage($owner: String) {
+    onCreateMessage(owner: $owner) {
+      id
+      createdAt
+      content
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      chatRoomID
+      chatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage($owner: String) {
+    onUpdateMessage(owner: $owner) {
+      id
+      createdAt
+      content
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      chatRoomID
+      chatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage($owner: String) {
+    onDeleteMessage(owner: $owner) {
+      id
+      createdAt
+      content
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      chatRoomID
+      chatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       updatedAt
       owner
     }

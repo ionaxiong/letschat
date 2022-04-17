@@ -57,10 +57,11 @@ const ContactListItem = (props: ContactListItemProps) => {
       return undefined;
     }
   };
-
   const onClick = async () => {
     try {
-      const userInfo = await Auth.currentAuthenticatedUser();
+      const userInfo = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
       // 1. check whether the chatroom already existed,
       // if not, create a new chatroom
       const result = await checkForDuplicateChat(
@@ -74,7 +75,7 @@ const ContactListItem = (props: ContactListItemProps) => {
         });
       } else {
         const newChatRoomData = await API.graphql(
-          graphqlOperation(createChatRoom, { input: {} })
+          graphqlOperation(createChatRoom, { input: {lastMessageID: "zz753fca-e8c3-473b-8e85-b14196e84e16"} })
         );
         if (!newChatRoomData.data) {
           console.log("Failed to create a chatroom");
@@ -107,7 +108,6 @@ const ContactListItem = (props: ContactListItemProps) => {
       }
     } catch (e) {
       console.log("something went wrong", e);
-      // console.log("something went wrong", e.errors[0]["message"]);
     }
   };
 

@@ -4,47 +4,46 @@
 # change from AuthRule = { allow: public }
 # input AMPLIFY {
 #   globalAuthRule: AuthRule = { allow: owner }
-# } 
+# }
 # FOR TESTING ONLY!
-
-type User 
-  @model 
-  @aws_cognito_user_pools 
-  @auth(rules: [{ allow: owner}]){
-    id: ID!
-    name: String!
-    imageUri: String
-    status: String
-    chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields:["id"])
- }
-
-type ChatRoomUser 
-  @model 
-  @aws_cognito_user_pools 
-  @auth(rules: [{ allow: owner}]){
-    id: ID!
-    userID: ID! @index(name:"byUser")
-    chatRoomID: ID! @index(name:"byChatRoom")
-    user: User @hasOne(fields:["userID"])
-    chatRoom: ChatRoom @hasOne(fields:["chatRoomID"])
-}
-
-type ChatRoom 
-  @model 
-  @aws_cognito_user_pools 
-  @auth(rules: [{ allow: owner}]){
-    id: ID!
-    chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields:["id"])
-}
-
-# type Message
-#   @model
-#   @aws_cognito_user_pools
-#   @auth(rule: [{allow: owner}]) {
-
-#   }
-  
 
 # adapt new graphql version to migrate schema
 # @connection is replaced
 # @key is replaced
+
+type User @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  name: String!
+  imageUri: String
+  status: String
+  chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type ChatRoomUser
+  @model
+  @aws_cognito_user_pools
+  @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  chatRoomID: ID! @index(name: "byChatRoom")
+  user: User @hasOne(fields: ["userID"])
+  chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
+}
+
+type ChatRoom @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields: ["id"])
+  messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
+  lastMessageID: ID!
+  lastMessage: Message @hasOne(fields:["lastMessageID"])
+}
+
+type Message @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  createdAt: String! @index(name: "byCreatedAt", queryField: "messagesByCreatedAt")
+  content: String!
+  userID: ID! @index(name: "byUser")
+  user: User @hasOne(fields: ["userID"])
+  chatRoomID: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom")
+  chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
+}
