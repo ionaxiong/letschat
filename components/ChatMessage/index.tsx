@@ -3,17 +3,16 @@ import { View, Text } from "react-native";
 import { Message } from "../../types";
 import moment from "moment";
 import styles from "./styles";
-import { Auth } from "aws-amplify";
 
 export type ChatMessageProps = {
   message: Message;
+  myId: String,
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message } = props;
-  const userInfo = Auth.currentAuthenticatedUser()
+  const { message, myId } = props;
   const isMyMessage = () => {
-    return message.user.id === userInfo.attributes.sub;
+    return message.user.id === myId;
   };
 
   return (

@@ -308,6 +308,7 @@ export const listMessages = /* GraphQL */ `
 export const messagesByCreatedAt = /* GraphQL */ `
   query MessagesByCreatedAt(
     $createdAt: String!
+    $chatRoomID: ModelIDKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelMessageFilterInput
     $limit: Int
@@ -315,6 +316,7 @@ export const messagesByCreatedAt = /* GraphQL */ `
   ) {
     messagesByCreatedAt(
       createdAt: $createdAt
+      chatRoomID: $chatRoomID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -352,6 +354,7 @@ export const messagesByCreatedAt = /* GraphQL */ `
 export const messagesByChatRoom = /* GraphQL */ `
   query MessagesByChatRoom(
     $chatRoomID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelMessageFilterInput
     $limit: Int
@@ -359,6 +362,7 @@ export const messagesByChatRoom = /* GraphQL */ `
   ) {
     messagesByChatRoom(
       chatRoomID: $chatRoomID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

@@ -6,8 +6,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     messageBox: {
-        borderRadius: 10,
+        borderRadius: 25,
         padding: 10,
+
     },
     name: {
         fontWeight: "bold",
