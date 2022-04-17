@@ -47,7 +47,7 @@ const InputBox = (props) => {
       console.log("something wrong with inputting messages", e);
     }
     // send the message to the backend
-    setMessage(message);
+    setMessage("");
   };
 
   const onPress = () => {

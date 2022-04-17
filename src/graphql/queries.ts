@@ -305,6 +305,47 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
+export const chatRoomByLastMessage = /* GraphQL */ `
+  query ChatRoomByLastMessage(
+    $lastMessageID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelChatRoomFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    chatRoomByLastMessage(
+      lastMessageID: $lastMessageID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          userID
+          chatRoomID
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const messagesByCreatedAt = /* GraphQL */ `
   query MessagesByCreatedAt(
     $createdAt: String!

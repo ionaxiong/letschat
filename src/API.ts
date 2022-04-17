@@ -271,6 +271,12 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelIDKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -280,12 +286,6 @@ export type ModelIDKeyConditionInput = {
   between?: Array< string | null > | null,
   beginsWith?: string | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
@@ -1301,6 +1301,47 @@ export type ListMessagesQuery = {
         updatedAt: string,
         owner?: string | null,
       } | null,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ChatRoomByLastMessageQueryVariables = {
+  lastMessageID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelChatRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ChatRoomByLastMessageQuery = {
+  chatRoomByLastMessage?:  {
+    __typename: "ModelChatRoomConnection",
+    items:  Array< {
+      __typename: "ChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "Message",
+        id: string,
+        createdAt: string,
+        content: string,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null,
+      createdAt: string,
       updatedAt: string,
       owner?: string | null,
     } | null >,

@@ -17,7 +17,6 @@ export default function ChatsScreen() {
         const userData = await API.graphql(
           graphqlOperation(getUser, {
             id: userInfo.attributes.sub,
-            sortDirection: "ASC",
           })
         );
 
@@ -36,7 +35,6 @@ export default function ChatsScreen() {
 
         const uniqueChatRoomList = removeDuplications(chatRoomsData);
         setChatRooms(uniqueChatRoomList);
-        console.log(uniqueChatRoomList.length);
       } catch (e) {
         console.log(e);
       }

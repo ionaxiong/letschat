@@ -2,7 +2,6 @@ import React from "react";
 import { FlatList, ImageBackground } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ChatMessage from "../components/ChatMessage";
-import ChatRoomData from "../data/Chats";
 import backgroundImage from "../assets/images/backgroundImage.png";
 import InputBox from "../components/InputBox";
 import { messagesByChatRoom } from "../src/graphql/queries";
@@ -21,8 +20,6 @@ const ChatRoomScreen = () => {
         sortDirection: "DESC",
       })
     );
-    console.log("Fetch Messages");
-    console.log(messagesData);
     setMessages(messagesData.data.messagesByChatRoom.items);
   };
 
