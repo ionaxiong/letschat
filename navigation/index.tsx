@@ -26,6 +26,7 @@ import * as MainTabNavigator from "./MainTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ContactsScreen from "../screens/ContactsScreen";
+import ChatsScreen from "../screens/ChatsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -61,14 +62,15 @@ function RootNavigator() {
     >
       <Stack.Screen
         name="Root"
-        component={MainTabNavigator.BottomTabNavigator}
+        // component={MainTabNavigator.BottomTabNavigator}
+        component={ChatsScreen}
         options={{
           title: "LetsChat",
           headerRight: () => (
             <View
               style={{
                 flexDirection: "row",
-                width: 50,
+                width: 25,
                 justifyContent: "space-between",
               }}
             >
@@ -77,11 +79,11 @@ function RootNavigator() {
                 size={20}
                 color={Colors.light.background}
               />
-              <MaterialCommunityIcons
+              {/* <MaterialCommunityIcons
                 name="dots-vertical"
                 size={20}
                 color={Colors.light.background}
-              />
+              /> */}
             </View>
           ),
         }}
@@ -99,7 +101,7 @@ function RootNavigator() {
                 justifyContent: "space-between",
               }}
             >
-              <FontAwesome5
+              {/* <FontAwesome5
                 name="video"
                 size={20}
                 color={Colors.light.background}
@@ -113,15 +115,12 @@ function RootNavigator() {
                 name="dots-vertical"
                 size={20}
                 color={Colors.light.background}
-              />
+              /> */}
             </View>
           ),
         })}
       />
-      <Stack.Screen
-        name="Contacts"
-        component={ContactsScreen}
-      />
+      <Stack.Screen name="Contacts" component={ContactsScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
