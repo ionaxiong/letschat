@@ -4,7 +4,6 @@ import styles from "./styles";
 import { useState, useEffect } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createMessage } from "../../src/graphql/mutations";
-import { ChatRoom } from "../../src/API";
 import {
   MaterialCommunityIcons,
   FontAwesome5,
@@ -16,7 +15,6 @@ import {
 const InputBox = (props) => {
   const { chatRoomID } = props;
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState("");
   const [userId, setUserId] = useState("");
 
   useEffect(() => {

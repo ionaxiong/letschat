@@ -40,10 +40,10 @@ type ChatRoom @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
 
 type Message @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
   id: ID!
-  createdAt: String! @index(name: "byCreatedAt", queryField: "messagesByCreatedAt")
+  createdAt: String! @index(name: "byCreatedAt", queryField: "messagesByCreatedAt", sortKeyFields: ["chatRoomID"])
   content: String!
   userID: ID! @index(name: "byUser")
   user: User @hasOne(fields: ["userID"])
-  chatRoomID: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom")
+  chatRoomID: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom", sortKeyFields: ["createdAt"])
   chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
 }
