@@ -3,7 +3,7 @@ import { View, TextInput, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { useState, useEffect } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createMessage } from "../../src/graphql/mutations";
+import { updateChatRoom, createMessage } from "../../src/graphql/mutations";
 import {
   MaterialCommunityIcons,
   FontAwesome5,
@@ -32,9 +32,24 @@ const InputBox = (props) => {
     console.warn("Recording");
   };
 
-  const onSendPress = async () => {
+  const updateChatRoomLastMessage = async (messageId: string) => {
     try {
       await API.graphql(
+        graphqlOperation(updateChatRoom, {
+          input: {
+            id: chatRoomID,
+            lastMessageID: messageId,
+          },
+        })
+      );
+    } catch (e) {
+      console.log("something wrong while updating chat room last message", e);
+    }
+  };
+
+  const onSendPress = async () => {
+    try {
+      const newMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
             content: message,
@@ -43,6 +58,7 @@ const InputBox = (props) => {
           },
         })
       );
+      await updateChatRoomLastMessage(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log("something wrong with inputting messages", e);
     }
