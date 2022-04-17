@@ -17,6 +17,7 @@ export default function ChatsScreen() {
         const userData = await API.graphql(
           graphqlOperation(getUser, {
             id: userInfo.attributes.sub,
+            sortDirection: "ASC",
           })
         );
 

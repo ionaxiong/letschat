@@ -16,7 +16,7 @@ type User @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
   name: String!
   imageUri: String
   status: String
-  chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"])
+  chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"]) 
 }
 
 type ChatRoomUser
@@ -34,7 +34,7 @@ type ChatRoom @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
   id: ID!
   chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields: ["id"])
   messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
-  lastMessageID: ID!
+  lastMessageID: ID! @index(name: "byLastMessageID", queryField: "chatRoomByLastMessage")
   lastMessage: Message @hasOne(fields:["lastMessageID"])
 }
 

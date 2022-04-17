@@ -6,9 +6,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     messageBox: {
-        borderRadius: 25,
+        borderRadius: 20,
         padding: 10,
-
     },
     name: {
         fontWeight: "bold",
@@ -16,7 +15,6 @@ const styles = StyleSheet.create({
         marginBottom: 2
     },
     message: {
-
     },
     time: {
         alignSelf: "flex-end",
