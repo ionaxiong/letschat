@@ -9,6 +9,13 @@
       "cognitoUserPoolId": "authletschatf6f52036"
     },
     "conflictResolution": {},
-    "additionalAuthTypes": []
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 7,
+        "apiKeyExpirationDate": "2022-04-27T19:32:16.404Z",
+        "keyDescription": "test"
+      }
+    ]
   }
 }

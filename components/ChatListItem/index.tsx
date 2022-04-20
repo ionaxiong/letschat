@@ -27,13 +27,14 @@ const ChatListItem = (props: ChatListItemProps) => {
     getOtherUser();
   }, []);
 
+  
   const onClick = () => {
     navigation.navigate("ChatRoom", {
       id: chatRoom.id,
       name: otherUser.name,
     });
   };
-
+  
   if (!otherUser) {
     return null;
   }
@@ -51,7 +52,7 @@ const ChatListItem = (props: ChatListItemProps) => {
             <Text style={styles.lastMessage}>
               {chatRoom.lastMessage
                 ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
-                : ""}
+                : ""} 
             </Text>
           </View>
         </View>

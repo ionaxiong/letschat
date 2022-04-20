@@ -11,18 +11,31 @@
 # @connection is replaced
 # @key is replaced
 
-type User @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+type User
+  @model
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: owner }
+    ]
+  ) {
   id: ID!
   name: String!
   imageUri: String
   status: String
-  chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"]) 
+  chatRoomUser: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type ChatRoomUser
   @model
   @aws_cognito_user_pools
-  @auth(rules: [{ allow: owner }]) {
+  @auth(
+    rules: [
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: owner }
+    ]
+  ) {
   id: ID!
   userID: ID! @index(name: "byUser")
   chatRoomID: ID! @index(name: "byChatRoom")
@@ -30,20 +43,42 @@ type ChatRoomUser
   chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
 }
 
-type ChatRoom @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+type ChatRoom
+  @model
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: owner }
+    ]
+  ) {
   id: ID!
-  chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byChatRoom", fields: ["id"])
+  chatRoomUsers: [ChatRoomUser]
+    @hasMany(indexName: "byChatRoom", fields: ["id"])
   messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
-  lastMessageID: ID! @index(name: "byLastMessageID", queryField: "chatRoomByLastMessage")
-  lastMessage: Message @hasOne(fields:["lastMessageID"])
+  lastMessageID: ID!
+  lastMessage: Message @hasOne(fields: ["lastMessageID"])
 }
 
-type Message @model @aws_cognito_user_pools @auth(rules: [{ allow: owner }]) {
+type Message
+  @model
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: owner }
+    ]
+  ) {
   id: ID!
-  createdAt: String! @index(name: "byCreatedAt", queryField: "messagesByCreatedAt", sortKeyFields: ["chatRoomID"])
+  createdAt: String! @index(name: "byCreatedAt")
   content: String!
-  userID: ID! @index(name: "byUser")
+  userID: ID!
   user: User @hasOne(fields: ["userID"])
-  chatRoomID: ID! @index(name: "byChatRoom", queryField: "messagesByChatRoom", sortKeyFields: ["createdAt"])
+  chatRoomID: ID!
+    @index(
+      name: "byChatRoom"
+      queryField: "messagesByChatRoom"
+      sortKeyFields: ["createdAt"]
+    )
   chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
 }

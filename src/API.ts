@@ -271,22 +271,6 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
-export type ModelIDKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-};
-
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -296,6 +280,12 @@ export type ModelStringKeyConditionInput = {
   between?: Array< string | null > | null,
   beginsWith?: string | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
@@ -1275,91 +1265,6 @@ export type ListMessagesQueryVariables = {
 
 export type ListMessagesQuery = {
   listMessages?:  {
-    __typename: "ModelMessageConnection",
-    items:  Array< {
-      __typename: "Message",
-      id: string,
-      createdAt: string,
-      content: string,
-      userID: string,
-      user?:  {
-        __typename: "User",
-        id: string,
-        name: string,
-        imageUri?: string | null,
-        status?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      chatRoomID: string,
-      chatRoom?:  {
-        __typename: "ChatRoom",
-        id: string,
-        lastMessageID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ChatRoomByLastMessageQueryVariables = {
-  lastMessageID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelChatRoomFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ChatRoomByLastMessageQuery = {
-  chatRoomByLastMessage?:  {
-    __typename: "ModelChatRoomConnection",
-    items:  Array< {
-      __typename: "ChatRoom",
-      id: string,
-      chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      messages?:  {
-        __typename: "ModelMessageConnection",
-        nextToken?: string | null,
-      } | null,
-      lastMessageID: string,
-      lastMessage?:  {
-        __typename: "Message",
-        id: string,
-        createdAt: string,
-        content: string,
-        userID: string,
-        chatRoomID: string,
-        updatedAt: string,
-        owner?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type MessagesByCreatedAtQueryVariables = {
-  createdAt: string,
-  chatRoomID?: ModelIDKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelMessageFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type MessagesByCreatedAtQuery = {
-  messagesByCreatedAt?:  {
     __typename: "ModelMessageConnection",
     items:  Array< {
       __typename: "Message",
