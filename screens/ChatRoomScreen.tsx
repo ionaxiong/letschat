@@ -20,6 +20,7 @@ const ChatRoomScreen = () => {
         sortDirection: "DESC",
       })
     );
+    console.log("messagesData.data.messagesByChatRoom.items",messagesData.data.messagesByChatRoom.items)
     setMessages(messagesData.data.messagesByChatRoom.items);
   };
 
@@ -39,14 +40,16 @@ const ChatRoomScreen = () => {
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage, { owner: myId })
     ).subscribe({
-      next: (data) => {
-        const newMessage = data.value.data.onCreateMessage;
-
+      next: ({ provider, value }) => {
+        const newMessage = value.data.onCreateMessage;
         if (newMessage.chatRoomID !== route.params.id) {
           console.log("Message is in another room");
           return;
         }
-        fetchMessages();
+        setMessages((messages) => [
+          newMessage,
+          ...messages,
+        ]);
       },
       error: (error) => console.error(error),
     });

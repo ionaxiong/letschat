@@ -28,10 +28,7 @@ const InputBox = (props) => {
       const userInfo = await Auth.currentAuthenticatedUser();
       setUserId(userInfo.attributes.sub);
     };
-
-    const fetchMessages = async () => {};
     fetchUser();
-    fetchMessages();
   }, []);
 
   const onMicrophonePress = () => {
@@ -52,7 +49,6 @@ const InputBox = (props) => {
       console.log("something wrong while updating chat room last message", e);
     }
   };
-
   const onSendPress = async () => {
     try {
       const newMessageData = await API.graphql(
@@ -64,12 +60,12 @@ const InputBox = (props) => {
           },
         })
       );
+      setMessage("");
       await updateChatRoomLastMessage(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log("something wrong with inputting messages", e);
     }
     // send the message to the backend
-    setMessage("");
   };
 
   const onPress = () => {
