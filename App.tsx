@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useEffect } from "react";
+import { LogBox } from 'react-native';
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -13,17 +14,19 @@ import { getUser } from "./src/graphql/queries";
 import { createUser } from "./src/graphql/mutations";
 import { Amplify, Auth, API, graphqlOperation } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
+
+LogBox.ignoreLogs(['Remote debugger']);
+
 Amplify.configure({
   ...awsconfig,
   Analytics: {
     disabled: true,
   },
 });
-
 function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-
+  
   const randomImages = [
     "https://www.hdnicewallpapers.com/Walls/Big/Bear/Animal_Bear_with_2_Beautiful_Cub.jpg",
     "https://a-z-animals.com/media/pig-7-1024x535.jpg",
