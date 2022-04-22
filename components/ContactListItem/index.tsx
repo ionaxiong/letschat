@@ -59,9 +59,7 @@ const ContactListItem = (props: ContactListItemProps) => {
   };
   const onClick = async () => {
     try {
-      const userInfo = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
+      const userInfo = await Auth.currentAuthenticatedUser();
       // 1. check whether the chatroom already existed,
       // if not, create a new chatroom
       const result = await checkForDuplicateChat(

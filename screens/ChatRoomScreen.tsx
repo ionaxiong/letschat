@@ -20,7 +20,6 @@ const ChatRoomScreen = () => {
         sortDirection: "DESC",
       })
     );
-    console.log("messagesData.data.messagesByChatRoom.items",messagesData.data.messagesByChatRoom.items)
     setMessages(messagesData.data.messagesByChatRoom.items);
   };
 
@@ -46,10 +45,7 @@ const ChatRoomScreen = () => {
           console.log("Message is in another room");
           return;
         }
-        setMessages((messages) => [
-          newMessage,
-          ...messages,
-        ]);
+        setMessages((messages) => [newMessage, ...messages]);
       },
       error: (error) => console.error(error),
     });

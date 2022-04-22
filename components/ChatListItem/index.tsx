@@ -4,21 +4,24 @@ import styles from "./styles";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Auth } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
+import {onUpdateChatRoom} from "../../src/graphql/subscriptions"
 
 export type ChatListItemProps = {
+  myId: string,
   chatRoom: ChatRoom;
 };
 
 const ChatListItem = (props: ChatListItemProps) => {
-  const { chatRoom } = props;
+  const { myId, chatRoom } = props;
   const [otherUser, setOtherUser] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
     const getOtherUser = async () => {
-      const userInfo = await Auth.currentAuthenticatedUser();
-      if (chatRoom.chatRoomUsers.items[0].user.id === userInfo.attributes.sub) {
+      // const userInfo = await Auth.currentAuthenticatedUser();
+      // if (chatRoom.chatRoomUsers.items[0].user.id === userInfo.attributes.sub) {
+      if (chatRoom.chatRoomUsers.items[0].user.id === myId) {
         setOtherUser(chatRoom.chatRoomUsers.items[1].user);
       } else {
         setOtherUser(chatRoom.chatRoomUsers.items[0].user);
@@ -27,6 +30,17 @@ const ChatListItem = (props: ChatListItemProps) => {
     getOtherUser();
   }, []);
 
+  // useEffect(() => {
+  //   const subscription = API.graphql(
+  //     graphqlOperation(onUpdateChatRoom, { owner: myId })
+  //   ).subscribe({
+  //     next: ({provider, value}) => {
+  //       console.log("!!!!!!!!!!!! provider", provider, "!!!!! value", value)
+  //     },
+  //     error: (error) => console.error(error)
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, []);
   
   const onClick = () => {
     navigation.navigate("ChatRoom", {

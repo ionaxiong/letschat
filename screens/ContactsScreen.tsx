@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { View } from "../components/Themed";
 import ContactListItem from "../components/ContactListItem/index";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Auth } from "aws-amplify";
 import { listUsers } from "../src/graphql/queries";
 import { useState } from "react";
 
@@ -12,7 +12,12 @@ export default function ContactsScreen() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersData = await API.graphql(graphqlOperation(listUsers));
+        const userInfo = await Auth.currentAuthenticatedUser();
+        const usersData = await API.graphql(
+          graphqlOperation(listUsers, {
+            filter: { id: { notContains: userInfo.attributes.sub } },
+          })
+        );
         setUsers(usersData.data.listUsers.items);
       } catch (e) {
         console.log("something went wrong!", e);

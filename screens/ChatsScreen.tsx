@@ -8,6 +8,7 @@ import { getUser } from "./queries";
 import {
   onUpdateChatRoom,
   onUpdateChatRoomUser,
+  onCreateMessage,
 } from "../src/graphql/subscriptions";
 
 export default function ChatsScreen() {
@@ -40,6 +41,7 @@ export default function ChatsScreen() {
         const flag = {};
         const unique = [];
         duplicates.forEach((item) => {
+          // console.log("**************", item);
           if (!flag[item.chatRoomID]) {
             flag[item.chatRoomID] = true;
             unique.push(item);
@@ -63,21 +65,32 @@ export default function ChatsScreen() {
   // subscribe chatroom creation
 
   // subscribe chatroom update
-  useEffect(() => {
-    const subscription = API.graphql(
-      graphqlOperation(onUpdateChatRoomUser, { owner: myId })
-    ).subscribe({
-      next: (data) => {
-        console.log("this is onUpdateChatRoom data!!!!", data);
-        console.log("this is onUpdateChatRoom data!!!!");
-        fetchChatRooms();
-      },
-      error: (error) => {
-        console.error("something wrong while subcribing chat room updates", error);
-      },
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const subscription = API.graphql(
+  //     graphqlOperation(onUpdateChatRoom, { owner: myId })
+  //   ).subscribe({
+  //     next: ({provider, value}) => {
+  //       const testProvider = provider
+  //       const testValue = value
+  //       console.log("!!!!!!!!!!!! provider", testProvider, "!!!!! value", testValue)
+  //     },
+  //     error: (error) => console.error(error)
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, []);
+  // console.log("chatrooms data...",chatRooms[0])
+
+  // useEffect(() => {
+  //   const subscription = API.graphql(
+  //     graphqlOperation(onCreateMessage, { owner: myId })
+  //   ).subscribe({
+  //     next: (event) =>{
+  //       console.log(event)
+  //     },
+  //     error: (error) => console.error(error),
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -85,7 +98,9 @@ export default function ChatsScreen() {
         style={styles.flatList}
         keyExtractor={(item) => item.id}
         data={chatRooms}
-        renderItem={({ item }) => <ChatListItem chatRoom={item.chatRoom} />}
+        renderItem={({ item }) => (
+          <ChatListItem myId={myId} chatRoom={item.chatRoom} />
+        )}
       ></FlatList>
       <NewMessageButton />
     </View>
