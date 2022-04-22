@@ -19,8 +19,6 @@ const ChatListItem = (props: ChatListItemProps) => {
 
   useEffect(() => {
     const getOtherUser = async () => {
-      // const userInfo = await Auth.currentAuthenticatedUser();
-      // if (chatRoom.chatRoomUsers.items[0].user.id === userInfo.attributes.sub) {
       if (chatRoom.chatRoomUsers.items[0].user.id === myId) {
         setOtherUser(chatRoom.chatRoomUsers.items[1].user);
       } else {
@@ -30,18 +28,6 @@ const ChatListItem = (props: ChatListItemProps) => {
     getOtherUser();
   }, []);
 
-  // useEffect(() => {
-  //   const subscription = API.graphql(
-  //     graphqlOperation(onUpdateChatRoom, { owner: myId })
-  //   ).subscribe({
-  //     next: ({provider, value}) => {
-  //       console.log("!!!!!!!!!!!! provider", provider, "!!!!! value", value)
-  //     },
-  //     error: (error) => console.error(error)
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, []);
-  
   const onClick = () => {
     navigation.navigate("ChatRoom", {
       id: chatRoom.id,

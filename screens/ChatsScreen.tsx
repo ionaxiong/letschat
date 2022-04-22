@@ -55,28 +55,8 @@ export default function ChatsScreen() {
     }
   };
 
-  // const fetchChatRooms = async () => {
-  //   try {
-  //     const userInfo = await Auth.currentAuthenticatedUser();
-  //     const userData = await API.graphql(
-  //       graphqlOperation(getUser, {
-  //         id: userInfo.attributes.sub,
-  //       })
-  //     );
-  //   } catch (e) {
-  //     console.error("something wrong while fetching chatrooms", e);
-  //   }
-  // };
-
   useEffect(() => {
     fetchChatRooms();
-  }, []);
-  // subscribe chatroom deletion
-
-  // subscribe chatroom creation
-
-  // subscribe chatroom update
-  useEffect(() => {
     const subscriptionOnUpdateChatRoom = API.graphql(
       graphqlOperation(onUpdateChatRoom, { owner: myId })
     ).subscribe({
@@ -90,18 +70,6 @@ export default function ChatsScreen() {
     });
     return () => subscriptionOnUpdateChatRoom.unsubscribe();
   }, []);
-
-  // useEffect(() => {
-  //   const subscription = API.graphql(
-  //     graphqlOperation(onCreateMessage, { owner: myId })
-  //   ).subscribe({
-  //     next: (event) =>{
-  //       console.log(event)
-  //     },
-  //     error: (error) => console.error(error),
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, []);
 
   return (
     <View style={styles.container}>
