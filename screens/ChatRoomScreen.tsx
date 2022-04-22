@@ -36,7 +36,7 @@ const ChatRoomScreen = () => {
   }, []);
 
   useEffect(() => {
-    const subscription = API.graphql(
+    const subscriptionOnCreateMessage = API.graphql(
       graphqlOperation(onCreateMessage, { owner: myId })
     ).subscribe({
       next: ({ provider, value }) => {
@@ -49,7 +49,7 @@ const ChatRoomScreen = () => {
       },
       error: (error) => console.error(error),
     });
-    return () => subscription.unsubscribe();
+    return () => subscriptionOnCreateMessage.unsubscribe();
   }, []);
 
   return (

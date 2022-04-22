@@ -7,8 +7,9 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getUser } from "./queries";
 import {
   onUpdateChatRoom,
+  onCreateChatRoom,
+  onDeleteChatRoomUser,
   onUpdateChatRoomUser,
-  onCreateMessage,
 } from "../src/graphql/subscriptions";
 
 export default function ChatsScreen() {
@@ -57,12 +58,15 @@ export default function ChatsScreen() {
 
   useEffect(() => {
     fetchChatRooms();
+  }, []);
+
+  useEffect(() => {
     const subscriptionOnUpdateChatRoom = API.graphql(
       graphqlOperation(onUpdateChatRoom, { owner: myId })
     ).subscribe({
       next: ({ provider, value }) => {
-        const chatRoomUpdates = value.data.onUpdateChatRoom;
-        if (chatRoomUpdates) {
+        const chatRoomUpdate = value.data.onUpdateChatRoom;
+        if (chatRoomUpdate) {
           fetchChatRooms();
         }
       },
@@ -70,6 +74,24 @@ export default function ChatsScreen() {
     });
     return () => subscriptionOnUpdateChatRoom.unsubscribe();
   }, []);
+
+  // useEffect(() => {
+  //   fetchChatRooms();
+  //   const subscriptionOnCreateChatRoom = API.graphql(
+  //     graphqlOperation(onCreateChatRoom, { owner: myId })
+  //   ).subscribe({
+  //     next: ({ provider, value }) => {
+  //       const chatRoomCreation = value.data.onCreateChatRoom;
+  //       console.log("!!!!!!!", value, "******", chatRoomCreation);
+  //       if (chatRoomCreation !== null) {
+  //         console.log("new chat room created");
+  //         fetchChatRooms();
+  //       }
+  //     },
+  //     error: (error) => console.error(error),
+  //   });
+  //   return () => subscriptionOnCreateChatRoom.unsubscribe();
+  // }, []);
 
   return (
     <View style={styles.container}>

@@ -14,7 +14,7 @@ export type ChatListItemProps = {
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { myId, chatRoom } = props;
-  const [otherUser, setOtherUser] = useState(null);
+  const [otherUser, setOtherUser] = useState("");
   const navigation = useNavigation();
 
   useEffect(() => {
