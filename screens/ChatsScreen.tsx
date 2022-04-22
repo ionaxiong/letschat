@@ -41,7 +41,6 @@ export default function ChatsScreen() {
         const flag = {};
         const unique = [];
         duplicates.forEach((item) => {
-          // console.log("**************", item);
           if (!flag[item.chatRoomID]) {
             flag[item.chatRoomID] = true;
             unique.push(item);
@@ -49,13 +48,25 @@ export default function ChatsScreen() {
         });
         return unique;
       };
-
       const uniqueChatRoomList = removeDuplications(chatRoomsData);
       setChatRooms(uniqueChatRoomList);
     } catch (e) {
       console.log(e);
     }
   };
+
+  // const fetchChatRooms = async () => {
+  //   try {
+  //     const userInfo = await Auth.currentAuthenticatedUser();
+  //     const userData = await API.graphql(
+  //       graphqlOperation(getUser, {
+  //         id: userInfo.attributes.sub,
+  //       })
+  //     );
+  //   } catch (e) {
+  //     console.error("something wrong while fetching chatrooms", e);
+  //   }
+  // };
 
   useEffect(() => {
     fetchChatRooms();
@@ -65,20 +76,20 @@ export default function ChatsScreen() {
   // subscribe chatroom creation
 
   // subscribe chatroom update
-  // useEffect(() => {
-  //   const subscription = API.graphql(
-  //     graphqlOperation(onUpdateChatRoom, { owner: myId })
-  //   ).subscribe({
-  //     next: ({provider, value}) => {
-  //       const testProvider = provider
-  //       const testValue = value
-  //       console.log("!!!!!!!!!!!! provider", testProvider, "!!!!! value", testValue)
-  //     },
-  //     error: (error) => console.error(error)
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, []);
-  // console.log("chatrooms data...",chatRooms[0])
+  useEffect(() => {
+    const subscriptionOnUpdateChatRoom = API.graphql(
+      graphqlOperation(onUpdateChatRoom, { owner: myId })
+    ).subscribe({
+      next: ({ provider, value }) => {
+        const chatRoomUpdates = value.data.onUpdateChatRoom;
+        if (chatRoomUpdates) {
+          fetchChatRooms();
+        }
+      },
+      error: (error) => console.error(error),
+    });
+    return () => subscriptionOnUpdateChatRoom.unsubscribe();
+  }, []);
 
   // useEffect(() => {
   //   const subscription = API.graphql(

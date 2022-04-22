@@ -53,8 +53,7 @@ type ChatRoom
     ]
   ) {
   id: ID!
-  chatRoomUsers: [ChatRoomUser]
-    @hasMany(indexName: "byChatRoom", fields: ["id"])
+  chatRoomUsers: [ChatRoomUser]@hasMany(indexName: "byChatRoom", fields: ["id"])
   messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
   lastMessageID: ID!
   lastMessage: Message @hasOne(fields: ["lastMessageID"])
