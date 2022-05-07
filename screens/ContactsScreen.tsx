@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { View } from "../components/Themed";
 import ContactListItem from "../components/ContactListItem/index";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { listUsers } from "../src/graphql/queries";
-import { useState, useContext } from "react";
 import { SearchContext } from "../navigation";
 
 export default function ContactsScreen() {

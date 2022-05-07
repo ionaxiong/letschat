@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList, ImageBackground } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ChatMessage from "../components/ChatMessage";
@@ -6,12 +6,14 @@ import backgroundImage from "../assets/images/backgroundImage.png";
 import InputBox from "../components/InputBox";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { messagesByChatRoom } from "../src/graphql/queries";
-import { onCreateMessage } from "../src/graphql/subscriptions";
+import { onCreateMessage, onCreateChatRoom } from '../src/graphql/subscriptions';
+import { SearchContext } from "../navigation";
 
 const ChatRoomScreen = () => {
   const route = useRoute();
   const [messages, setMessages] = useState([]);
   const [myId, setMyId] = useState(null);
+  const { show, setShow, search, setSearch } = useContext(SearchContext);
 
   const fetchMessages = async () => {
     const messagesData = await API.graphql(
@@ -36,6 +38,8 @@ const ChatRoomScreen = () => {
   }, []);
 
   useEffect(() => {
+    setShow(false);
+    setSearch("");
     const subscriptionOnCreateMessage = API.graphql(
       graphqlOperation(onCreateMessage, { owner: myId })
     ).subscribe({
@@ -59,7 +63,11 @@ const ChatRoomScreen = () => {
     >
       <FlatList
         keyExtractor={(item) => item.id}
-        data={messages}
+        data={messages.filter((x) =>
+          x.content
+            .toLowerCase()
+            .includes(search.toLowerCase().trim().replace(/\s/g, ""))
+        )}
         renderItem={({ item }) => <ChatMessage myId={myId} message={item} />}
         inverted
       />

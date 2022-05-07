@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { FlatList, StyleSheet, RefreshControl,  SafeAreaView, ScrollView } from "react-native";
 import ChatListItem from "../components/ChatListItem";
 import NewMessageButton from "../components/NewMessageButton";
 import { View } from "../components/Themed";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getUser } from "./queries";
-import {
-  onUpdateChatRoom,
-} from "../src/graphql/subscriptions";
+import { onUpdateChatRoom } from "../src/graphql/subscriptions";
+import { SearchContext } from "../navigation";
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
   const [myId, setMyId] = useState(null);
+  const { show, setShow, search, setSearch } = useContext(SearchContext);
 
   useEffect(() => {
+    setSearch("");
+    setShow(false);
     const getMyId = async () => {
       try {
         const userInfo = await Auth.currentAuthenticatedUser();
@@ -48,6 +50,7 @@ export default function ChatsScreen() {
         return unique;
       };
       const uniqueChatRoomList = removeDuplications(chatRoomsData);
+
       setChatRooms(uniqueChatRoomList);
     } catch (e) {
       console.log(e);
@@ -74,15 +77,12 @@ export default function ChatsScreen() {
   }, []);
 
   // useEffect(() => {
-  //   fetchChatRooms();
   //   const subscriptionOnCreateChatRoom = API.graphql(
   //     graphqlOperation(onCreateChatRoom, { owner: myId })
   //   ).subscribe({
   //     next: ({ provider, value }) => {
-  //       const chatRoomCreation = value.data.onCreateChatRoom;
-  //       console.log("!!!!!!!", value, "******", chatRoomCreation);
-  //       if (chatRoomCreation !== null) {
-  //         console.log("new chat room created");
+  //       const chatRoomUpdate = value.data.onCreateChatRoom;
+  //       if (chatRoomUpdate) {
   //         fetchChatRooms();
   //       }
   //     },
@@ -90,13 +90,24 @@ export default function ChatsScreen() {
   //   });
   //   return () => subscriptionOnCreateChatRoom.unsubscribe();
   // }, []);
-
+  
   return (
     <View style={styles.container}>
       <FlatList
-        style={styles.flatList}
         keyExtractor={(item) => item.id}
-        data={chatRooms}
+        style={styles.flatList}
+        data={
+          chatRooms.filter((x) =>
+            x.chatRoom.chatRoomUsers.items
+              .filter((obj) => obj.user.id !== myId)
+              .map((obj) => obj.user.name)
+              .some((chatRoomUserName) =>
+                chatRoomUserName
+                  .toLowerCase()
+                  .includes(search.toLowerCase().trim().replace(/\s/g, ""))
+              )
+          )
+        }
         renderItem={({ item }) => (
           <ChatListItem myId={myId} chatRoom={item.chatRoom} />
         )}

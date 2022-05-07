@@ -22,6 +22,8 @@ import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import { SearchBar } from "react-native-elements";
 import { Dimensions } from "react-native";
+import { SearchButtonProps } from "../components/SearchButton/index";
+import SearchButton from "../components/SearchButton/index";
 
 export const SearchContext = createContext({
   show: false,
@@ -124,13 +126,41 @@ function RootNavigator() {
           options={({ route }) => ({
             title: route.params.name,
             headerRight: () => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: 100,
-                  justifyContent: "space-between",
-                }}
-              ></View>
+              <TouchableOpacity onPress={toggleSearchButtonVisibility}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: show ? Dimensions.get("window").width - 30 : 25,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {show ? (
+                    <SearchBar
+                      inputContainerStyle={{
+                        backgroundColor: Colors.light.background,
+                      }}
+                      containerStyle={{
+                        backgroundColor: Colors.light.background,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        flex: 1,
+                        height: 50,
+                        padding: 0,
+                        marginTop: -5,
+                      }}
+                      placeholder="Search ... "
+                      onChangeText={updateSearch}
+                      value={search}
+                    />
+                  ) : (
+                    <Octicons
+                      name="search"
+                      size={20}
+                      color={Colors.light.background}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
             ),
           })}
         />
