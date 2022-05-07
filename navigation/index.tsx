@@ -11,8 +11,14 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
-import { ColorSchemeName, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  ColorSchemeName,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
@@ -21,6 +27,7 @@ import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import SearchButton from "../components/SearchButton";
+import { SearchBar } from "react-native-elements";
 
 export default function Navigation({
   colorScheme,
@@ -40,9 +47,12 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  // const onPress = () => {
-  //   console.warn("Recording");
-  // };
+  const [show, setShow] = useState(true);
+
+  const toggleSearchButtonVisibility = () => {
+    console.log("test");
+    setShow(!show);
+  };
 
   return (
     <Stack.Navigator
@@ -96,29 +106,60 @@ function RootNavigator() {
           ),
         })}
       />
+
       <Stack.Screen
         name="Contacts"
         component={ContactsScreen}
         options={{
           title: "Contacts",
+          header: () => (
+            <View>
+              <SearchBar
+                containerStyle={{
+                  backgroundColor: Colors.light.tint,
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}
+                placeholder="Type Here..."
+                // onChangeText={this.updateSearch}
+                // value={search}
+              />
+            </View>
+          ),
           headerRight: () => (
-            <TouchableOpacity
-            >
+            // <KeyboardAvoidingView
+            //   behavior={Platform.OS === "ios" ? "padding" : "height"}
+            // >
+            <TouchableOpacity onPress={toggleSearchButtonVisibility}>
+              {/* {Boolean(show) ? ( // show -> Boolean(show) https://stackoverflow.com/questions/69674823/text-strings-must-be-rendered-within-text-react-native */}
               <View
                 style={{
                   flexDirection: "row",
                   width: 25,
                   justifyContent: "space-between",
                 }}
-                >
-                <Octicons
-                  name="search"
-                  size={20}
-                  color={Colors.light.background}
-            
-                />
+              >
+                {show ? (
+                  <SearchBar
+                    containerStyle={{
+                      backgroundColor: Colors.light.tint,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                    }}
+                    placeholder="Type Here..."
+                    // onChangeText={this.updateSearch}
+                    // value={search}
+                  />
+                ) : (
+                  <Octicons
+                    name="search"
+                    size={20}
+                    color={Colors.light.background}
+                  />
+                )}
               </View>
             </TouchableOpacity>
+            // </KeyboardAvoidingView>
           ),
         }}
       />
