@@ -11,7 +11,7 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import {
   ColorSchemeName,
   View,
@@ -28,6 +28,10 @@ import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import SearchButton from "../components/SearchButton";
 import { SearchBar } from "react-native-elements";
+import { Dimensions } from "react-native";
+import { BackgroundImage } from "react-native-elements/dist/config";
+
+export const SearchContext = createContext("");
 
 export default function Navigation({
   colorScheme,
@@ -47,91 +51,38 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const updateSearch = (e) => {
+    setSearch(e);
+  };
 
   const toggleSearchButtonVisibility = () => {
-    console.log("test");
     setShow(!show);
   };
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.light.tint,
-        },
-        headerShadowVisible: false,
-        headerTintColor: Colors.light.background,
-        headerTitleAlign: "left",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-      }}
-    >
-      <Stack.Screen
-        name="Root"
-        component={ChatsScreen}
-        options={{
-          title: "LetsChat",
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                width: 25,
-                justifyContent: "space-between",
-              }}
-            >
-              <Octicons
-                name="search"
-                size={20}
-                color={Colors.light.background}
-              />
-            </View>
-          ),
+    <SearchContext.Provider value={search}>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: Colors.light.tint,
+          },
+          headerShadowVisible: false,
+          headerTintColor: Colors.light.background,
+          headerTitleAlign: "left",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
         }}
-      />
-      <Stack.Screen
-        name="ChatRoom"
-        component={ChatRoomScreen}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                width: 100,
-                justifyContent: "space-between",
-              }}
-            ></View>
-          ),
-        })}
-      />
-
-      <Stack.Screen
-        name="Contacts"
-        component={ContactsScreen}
-        options={{
-          title: "Contacts",
-          header: () => (
-            <View>
-              <SearchBar
-                containerStyle={{
-                  backgroundColor: Colors.light.tint,
-                  borderWidth: 1,
-                  borderRadius: 5,
-                }}
-                placeholder="Type Here..."
-                // onChangeText={this.updateSearch}
-                // value={search}
-              />
-            </View>
-          ),
-          headerRight: () => (
-            // <KeyboardAvoidingView
-            //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-            // >
-            <TouchableOpacity onPress={toggleSearchButtonVisibility}>
-              {/* {Boolean(show) ? ( // show -> Boolean(show) https://stackoverflow.com/questions/69674823/text-strings-must-be-rendered-within-text-react-native */}
+      >
+        <Stack.Screen
+          name="Root"
+          component={ChatsScreen}
+          options={{
+            title: "LetsChat",
+            headerRight: () => (
               <View
                 style={{
                   flexDirection: "row",
@@ -139,36 +90,88 @@ function RootNavigator() {
                   justifyContent: "space-between",
                 }}
               >
-                {show ? (
-                  <SearchBar
-                    containerStyle={{
-                      backgroundColor: Colors.light.tint,
-                      borderWidth: 1,
-                      borderRadius: 5,
-                    }}
-                    placeholder="Type Here..."
-                    // onChangeText={this.updateSearch}
-                    // value={search}
-                  />
-                ) : (
-                  <Octicons
-                    name="search"
-                    size={20}
-                    color={Colors.light.background}
-                  />
-                )}
+                <Octicons
+                  name="search"
+                  size={20}
+                  color={Colors.light.background}
+                />
               </View>
-            </TouchableOpacity>
-            // </KeyboardAvoidingView>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-    </Stack.Navigator>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="ChatRoom"
+          component={ChatRoomScreen}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerRight: () => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: 100,
+                  justifyContent: "space-between",
+                }}
+              ></View>
+            ),
+          })}
+        />
+
+        <Stack.Screen
+          name="Contacts"
+          component={ContactsScreen}
+          options={{
+            title: "Contacts",
+            headerRight: () => (
+              <TouchableOpacity onPress={toggleSearchButtonVisibility}>
+                <View
+                  style={{
+                    borderColor: Colors.light.background,
+                    flexDirection: "row",
+                    width: show ? Dimensions.get("window").width - 30 : 25,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {show ? (
+                    <SearchBar
+                      inputStyle={{
+                        backgroundColor: Colors.light.background,
+                      }}
+                      inputContainerStyle={{
+                        backgroundColor: Colors.light.background,
+                      }}
+                      placeholderTextColor={"#g5g5g5"}
+                      containerStyle={{
+                        backgroundColor: Colors.light.background,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        flex: 1,
+                        height: 50,
+                        padding: 0,
+                        marginTop: -5,
+                      }}
+                      placeholder="Type Here..."
+                      onChangeText={updateSearch}
+                      value={search}
+                    />
+                  ) : (
+                    <Octicons
+                      name="search"
+                      size={20}
+                      color={Colors.light.background}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="NotFound"
+          component={NotFoundScreen}
+          options={{ title: "Oops!" }}
+        />
+      </Stack.Navigator>
+    </SearchContext.Provider>
   );
 }
 

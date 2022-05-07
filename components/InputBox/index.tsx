@@ -77,9 +77,9 @@ const InputBox = (props) => {
   };
 
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-    // >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <View style={styles.container}>
         <View style={styles.mainContainer}>
           {/* oijoijasd */}
@@ -124,7 +124,7 @@ const InputBox = (props) => {
           </View>
         </TouchableOpacity>
       </View>
-    // </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 

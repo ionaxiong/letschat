@@ -4,10 +4,12 @@ import { View } from "../components/Themed";
 import ContactListItem from "../components/ContactListItem/index";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { listUsers } from "../src/graphql/queries";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { SearchContext } from "../navigation";
 
 export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
+  const search = useContext(SearchContext);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -23,16 +25,15 @@ export default function ContactsScreen() {
         console.log("something went wrong!", e);
       }
     };
-
     fetchUsers();
   }, []);
-
+  
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={(item) => item.id}
         style={styles.flatList}
-        data={users}
+        data={users.filter((x) => x.name.includes(search))}
         renderItem={({ item }) => <ContactListItem user={item} />}
       ></FlatList>
     </View>
