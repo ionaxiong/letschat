@@ -31,7 +31,7 @@ import { SearchBar } from "react-native-elements";
 import { Dimensions } from "react-native";
 import { BackgroundImage } from "react-native-elements/dist/config";
 
-export const SearchContext = createContext("");
+export const SearchContext = createContext({show: false, setShow: () => {}, search: "", setSearch: () => {}});
 
 export default function Navigation({
   colorScheme,
@@ -63,7 +63,7 @@ function RootNavigator() {
   };
 
   return (
-    <SearchContext.Provider value={search}>
+    <SearchContext.Provider value={{ show, setShow, search, setSearch }}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -139,7 +139,6 @@ function RootNavigator() {
                       inputContainerStyle={{
                         backgroundColor: Colors.light.background,
                       }}
-                      placeholderTextColor={"#g5g5g5"}
                       containerStyle={{
                         backgroundColor: Colors.light.background,
                         borderWidth: 1,

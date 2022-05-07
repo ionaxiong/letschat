@@ -9,9 +9,11 @@ import { SearchContext } from "../navigation";
 
 export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
-  const search = useContext(SearchContext);
+  const { show, setShow, search, setSearch } = useContext(SearchContext);
 
   useEffect(() => {
+    setSearch("");
+    setShow(false);
     const fetchUsers = async () => {
       try {
         const userInfo = await Auth.currentAuthenticatedUser();
@@ -27,13 +29,17 @@ export default function ContactsScreen() {
     };
     fetchUsers();
   }, []);
-  
+
   return (
     <View style={styles.container}>
       <FlatList
         keyExtractor={(item) => item.id}
         style={styles.flatList}
-        data={users.filter((x) => x.name.includes(search))}
+        data={users.filter((x) =>
+          x.name
+            .toLowerCase()
+            .includes(search.toLowerCase().trim().replace(/\s/g, ""))
+        )}
         renderItem={({ item }) => <ContactListItem user={item} />}
       ></FlatList>
     </View>
