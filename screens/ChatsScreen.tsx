@@ -7,9 +7,6 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getUser } from "./queries";
 import {
   onUpdateChatRoom,
-  onCreateChatRoom,
-  onDeleteChatRoomUser,
-  onUpdateChatRoomUser,
 } from "../src/graphql/subscriptions";
 
 export default function ChatsScreen() {

@@ -12,13 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, createContext } from "react";
-import {
-  ColorSchemeName,
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { ColorSchemeName, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
@@ -26,12 +20,15 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
-import SearchButton from "../components/SearchButton";
 import { SearchBar } from "react-native-elements";
 import { Dimensions } from "react-native";
-import { BackgroundImage } from "react-native-elements/dist/config";
 
-export const SearchContext = createContext({show: false, setShow: () => {}, search: "", setSearch: () => {}});
+export const SearchContext = createContext({
+  show: false,
+  setShow: () => {},
+  search: "",
+  setSearch: () => {},
+});
 
 export default function Navigation({
   colorScheme,
@@ -83,19 +80,41 @@ function RootNavigator() {
           options={{
             title: "LetsChat",
             headerRight: () => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: 25,
-                  justifyContent: "space-between",
-                }}
-              >
-                <Octicons
-                  name="search"
-                  size={20}
-                  color={Colors.light.background}
-                />
-              </View>
+              <TouchableOpacity onPress={toggleSearchButtonVisibility}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: show ? Dimensions.get("window").width - 30 : 25,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {show ? (
+                    <SearchBar
+                      inputContainerStyle={{
+                        backgroundColor: Colors.light.background,
+                      }}
+                      containerStyle={{
+                        backgroundColor: Colors.light.background,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        flex: 1,
+                        height: 50,
+                        padding: 0,
+                        marginTop: -5,
+                      }}
+                      placeholder="Search ... "
+                      onChangeText={updateSearch}
+                      value={search}
+                    />
+                  ) : (
+                    <Octicons
+                      name="search"
+                      size={20}
+                      color={Colors.light.background}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
             ),
           }}
         />
@@ -125,7 +144,6 @@ function RootNavigator() {
               <TouchableOpacity onPress={toggleSearchButtonVisibility}>
                 <View
                   style={{
-                    borderColor: Colors.light.background,
                     flexDirection: "row",
                     width: show ? Dimensions.get("window").width - 30 : 25,
                     justifyContent: "space-between",
@@ -133,9 +151,6 @@ function RootNavigator() {
                 >
                   {show ? (
                     <SearchBar
-                      inputStyle={{
-                        backgroundColor: Colors.light.background,
-                      }}
                       inputContainerStyle={{
                         backgroundColor: Colors.light.background,
                       }}
@@ -148,7 +163,7 @@ function RootNavigator() {
                         padding: 0,
                         marginTop: -5,
                       }}
-                      placeholder="Type Here..."
+                      placeholder="Search ... "
                       onChangeText={updateSearch}
                       value={search}
                     />
