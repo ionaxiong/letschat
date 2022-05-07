@@ -29,6 +29,7 @@ export default function ChatsScreen() {
   }, []);
 
   const fetchChatRooms = async () => {
+    console.log("fetching chat rooms");
     try {
       const userInfo = await Auth.currentAuthenticatedUser();
       const userData = await API.graphql(

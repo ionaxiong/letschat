@@ -10,6 +10,7 @@ import styles from "./styles";
 import { useState, useEffect } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { updateChatRoom, createMessage } from "../../src/graphql/mutations";
+import { listUsers } from "../../src/graphql/queries";
 import {
   MaterialCommunityIcons,
   FontAwesome5,
@@ -18,17 +19,26 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 
-const InputBox = (props) => {
-  const { chatRoomID } = props;
-  const [message, setMessage] = useState("");
-  const [userId, setUserId] = useState("");
+export type SearchButtonProps = {
+  query: string;
+};
+
+const SearchButton = (props: SearchButtonProps) => {
+  const { query } = props;
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userInfo = await Auth.currentAuthenticatedUser();
-      setUserId(userInfo.attributes.sub);
+    const listUsersByQuery = async () => {
+      try {
+        await API.graphql(
+          graphqlOperation(listUsers, {
+            filter: { name: { eq: query } },
+          })
+        );
+      } catch (e) {
+        console.error("something wrong while searching the contact", e);
+      }
     };
-    fetchUser();
+    listUsersByQuery();
   }, []);
 
   const onMicrophonePress = () => {
@@ -77,21 +87,17 @@ const InputBox = (props) => {
   };
 
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === "ios" ? "padding" : "height"}
-    // >
-      <View style={styles.container}>
-        <View style={styles.mainContainer}>
-          {/* oijoijasd */}
-          <FontAwesome5 name="laugh-beam" size={24} color="grey"></FontAwesome5>
-          <TextInput
-            placeholder="Message"
-            style={styles.textInput}
-            multiline
-            value={message}
-            onChangeText={setMessage}
-          />
-          <Entypo
+    <View style={styles.container}>
+      <View style={styles.mainContainer}>
+        {/* <FontAwesome5 name="laugh-beam" size={24} color="grey"></FontAwesome5> */}
+        <TextInput
+          placeholder="Message"
+          style={styles.textInput}
+          multiline
+          value={message}
+          onChangeText={setMessage}
+        />
+        {/* <Entypo
             name="attachment"
             size={24}
             color="grey"
@@ -104,28 +110,25 @@ const InputBox = (props) => {
               color="grey"
               style={styles.icon}
             ></Fontisto>
+          )} */}
+      </View>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.buttonContainer}>
+          {!query ? (
+            <Octicons name="search" size={20} color={Colors.light.background} />
+          ) : (
+            <TextInput
+              placeholder="Search..."
+              style={styles.textInput}
+              multiline
+              value={query}
+              onChangeText={setMessage}
+            />
           )}
         </View>
-        <TouchableOpacity onPress={onPress}>
-          <View style={styles.buttonContainer}>
-            {!message ? (
-              <MaterialCommunityIcons
-                name="microphone"
-                size={24}
-                color="white"
-              ></MaterialCommunityIcons>
-            ) : (
-              <MaterialIcons
-                name="send"
-                size={24}
-                color="white"
-              ></MaterialIcons>
-            )}
-          </View>
-        </TouchableOpacity>
-      </View>
-    // </KeyboardAvoidingView>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-export default InputBox;
+export default SearchButton;

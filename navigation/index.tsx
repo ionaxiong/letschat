@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, View } from "react-native";
+import { ColorSchemeName, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
@@ -20,6 +20,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
+import SearchButton from "../components/SearchButton";
 
 export default function Navigation({
   colorScheme,
@@ -39,6 +40,10 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  // const onPress = () => {
+  //   console.warn("Recording");
+  // };
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -91,7 +96,32 @@ function RootNavigator() {
           ),
         })}
       />
-      <Stack.Screen name="Contacts" component={ContactsScreen} />
+      <Stack.Screen
+        name="Contacts"
+        component={ContactsScreen}
+        options={{
+          title: "Contacts",
+          headerRight: () => (
+            <TouchableOpacity
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: 25,
+                  justifyContent: "space-between",
+                }}
+                >
+                <Octicons
+                  name="search"
+                  size={20}
+                  color={Colors.light.background}
+            
+                />
+              </View>
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
