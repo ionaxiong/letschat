@@ -95,6 +95,7 @@ function RootNavigator() {
                     flexDirection: "row",
                     width: show ? Dimensions.get("window").width - 30 : 25,
                     justifyContent: "space-between",
+                    marginLeft: 25
                   }}
                 >
                   {show ? (
@@ -139,6 +140,7 @@ function RootNavigator() {
                     flexDirection: "row",
                     width: show ? Dimensions.get("window").width - 30 : 25,
                     justifyContent: "space-between",
+                    marginLeft: 25
                   }}
                 >
                   {show ? (
@@ -184,6 +186,7 @@ function RootNavigator() {
                     flexDirection: "row",
                     width: show ? Dimensions.get("window").width - 30 : 25,
                     justifyContent: "space-between",
+                    marginLeft: 25
                   }}
                 >
                   {show ? (
