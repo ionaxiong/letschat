@@ -15,7 +15,8 @@ import { createUser } from "./src/graphql/mutations";
 import { Amplify, Auth, API, graphqlOperation } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 
-LogBox.ignoreLogs(["Remote debugger", "Setting a timer", "Warning: ..."]);
+LogBox.ignoreLogs(["Remote debugger", "Setting a timer", "Warning:"]);
+LogBox.ignoreAllLogs(true)
 
 Amplify.configure({
   ...awsconfig,
@@ -49,13 +50,14 @@ function App() {
 
   // run this snippet only when app is first mounted
   useEffect(() => {
+    let isMounted = true;
     const fetchUser = async () => {
       // get authenticated user from auth
       const userInfo = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
 
-      if (userInfo) {
+      if (userInfo && isMounted) {
         const usersData = await API.graphql(
           graphqlOperation(getUser, { id: userInfo.attributes.sub })
         );
@@ -76,6 +78,9 @@ function App() {
       }
     };
     fetchUser();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (!isLoadingComplete) {
