@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FlatList, StyleSheet, RefreshControl,  SafeAreaView, ScrollView } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import ChatListItem from "../components/ChatListItem";
 import NewMessageButton from "../components/NewMessageButton";
 import { View } from "../components/Themed";
@@ -8,10 +14,20 @@ import { getUser } from "./queries";
 import { onUpdateChatRoom } from "../src/graphql/subscriptions";
 import { SearchContext } from "../navigation";
 
+// const wait = (timeout) => {
+//   return new Promise((resolve) => setTimeout(resolve, timeout));
+// };
+
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
   const [myId, setMyId] = useState(null);
   const { show, setShow, search, setSearch } = useContext(SearchContext);
+
+  // const [refreshing, setRefreshing] = React.useState(false);
+  // const onRefresh = React.useCallback(() => {
+  //   setRefreshing(true);
+  //   fetchChatRooms().then(() => setRefreshing(false));
+  // }, []);
 
   useEffect(() => {
     setSearch("");
@@ -90,30 +106,37 @@ export default function ChatsScreen() {
   //   });
   //   return () => subscriptionOnCreateChatRoom.unsubscribe();
   // }, []);
-  
+
   return (
-    <View style={styles.container}>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        style={styles.flatList}
-        data={
-          chatRooms.filter((x) =>
-            x.chatRoom.chatRoomUsers.items
-              .filter((obj) => obj.user.id !== myId)
-              .map((obj) => obj.user.name)
-              .some((chatRoomUserName) =>
-                chatRoomUserName
-                  .toLowerCase()
-                  .includes(search.toLowerCase().trim().replace(/\s/g, ""))
-              )
-          )
-        }
-        renderItem={({ item }) => (
-          <ChatListItem myId={myId} chatRoom={item.chatRoom} />
-        )}
-      ></FlatList>
-      <NewMessageButton />
-    </View>
+    <SafeAreaView>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
+      >
+        <View style={styles.container}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+            data={chatRooms.filter((x) =>
+              x.chatRoom.chatRoomUsers.items
+                .filter((obj) => obj.user.id !== myId)
+                .map((obj) => obj.user.name)
+                .some((chatRoomUserName) =>
+                  chatRoomUserName
+                    .toLowerCase()
+                    .includes(search.toLowerCase().trim().replace(/\s/g, ""))
+                )
+            )}
+            renderItem={({ item }) => (
+              <ChatListItem myId={myId} chatRoom={item.chatRoom} />
+            )}
+          />
+          <NewMessageButton />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
