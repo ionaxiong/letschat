@@ -22,8 +22,7 @@ import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import { SearchBar } from "react-native-elements";
 import { Dimensions } from "react-native";
-import { SearchButtonProps } from "../components/SearchButton/index";
-import SearchButton from "../components/SearchButton/index";
+import SignOut from '../components/SignOut/index';
 
 export const SearchContext = createContext({
   show: false,

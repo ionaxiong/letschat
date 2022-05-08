@@ -15,7 +15,7 @@ import { createUser } from "./src/graphql/mutations";
 import { Amplify, Auth, API, graphqlOperation } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 
-LogBox.ignoreLogs(["Remote debugger", "Setting a timer"]);
+LogBox.ignoreLogs(["Remote debugger", "Setting a timer", "Warning: ..."]);
 
 Amplify.configure({
   ...awsconfig,
