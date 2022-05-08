@@ -22,7 +22,7 @@ import ContactsScreen from "../screens/ContactsScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import { SearchBar } from "react-native-elements";
 import { Dimensions } from "react-native";
-import SignOut from '../components/SignOut/index';
+import SignOut from "../components/SignOut/index";
 
 export const SearchContext = createContext({
   show: false,
@@ -69,7 +69,7 @@ function RootNavigator() {
           },
           headerShadowVisible: false,
           headerTintColor: Colors.light.background,
-          headerTitleAlign: "left",
+          headerTitleAlign: "center",
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -80,6 +80,14 @@ function RootNavigator() {
           component={ChatsScreen}
           options={{
             title: "LetsChat",
+            headerLeft: () => (
+              <Octicons
+                name="sign-out"
+                size={25}
+                color={Colors.light.background}
+                onPress={SignOut}
+              />
+            ),
             headerRight: () => (
               <TouchableOpacity onPress={toggleSearchButtonVisibility}>
                 <View
